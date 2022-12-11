@@ -1,42 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Home from './Home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import GroupList from './GroupList';
+import GroupEdit from './GroupEdit';
 
 const App = () => {
-
-  const [groups, setGroups] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-
-    fetch('api/groups')
-        .then(response => response.json())
-        .then(data => {
-          setGroups(data);
-          setLoading(false);
-        })
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <div className="App-intro">
-            <h2>React Practice</h2>
-            {groups.map(group =>
-                <div key={group.id}>
-                  {group.name}
-                </div>
-            )}
-          </div>
-        </header>
-      </div>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route exact path="/" element={<Home/>}/>
+                <Route path='/groups' exact={true} element={<GroupList/>}/>
+            </Routes>
+        </Router>
+    )
 }
 
 export default App;
